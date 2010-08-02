@@ -41,7 +41,7 @@ module_function
   #                           all semicolons in the code. Defaults to +false+.
   # +:optimize+::     Should be +true+ if the compressor should enable all
   #                   micro optimizations. Defaults to +true+.
-  def compress_js(stream_or_string, options={})
+  def compress_js(stream_or_string, options={}, &block)
     compress(stream_or_string, options.merge(:type => 'js'), &block)
   end
 
