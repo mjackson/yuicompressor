@@ -53,13 +53,16 @@ module YUICompressor
 
           stdin.close
 
+          err = stderr.read
+          raise err unless err.empty?
+
           if block_given?
             yield stdout
           else
             stdout.read
           end
         rescue Exception => e
-          raise RuntimeError, 'Compression failed: %s' % e.message
+          raise RuntimeError, 'Compression failed. %s' % e
         end
       end
     end

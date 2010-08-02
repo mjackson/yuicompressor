@@ -89,4 +89,11 @@ CODE
 var Foo={a:1};Foo.bar=(function(baz){if(false){doSomething();}else{for(var index=0;index<baz.length;index++){doSomething(baz[index]);}}})("hello");
 CODE
   end
+
+  def test_errors
+    assert_raise RuntimeError do
+      # Should trigger a compilation error.
+      compress_js('var a = function(){;')
+    end
+  end
 end

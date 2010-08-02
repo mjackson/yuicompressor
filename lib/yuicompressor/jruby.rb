@@ -1,5 +1,4 @@
 require 'java'
-require 'logger'
 
 module YUICompressor
   module JRuby
@@ -11,17 +10,17 @@ module YUICompressor
     import com.yahoo.platform.yui.compressor.JavaScriptCompressor
     import com.yahoo.platform.yui.compressor.CssCompressor
 
-    class ErrorReporter < Logger #:nodoc:
-      def initialize
-        super($stderr)
-      end
-
-      def warning(message, source_name, line, line_source, line_offset)
-        warn(message)
-      end
-
+    class ErrorReporter #:nodoc:
       def error(message, source_name, line, line_source, line_offset)
-        super(message)
+        if line < 0
+          "\n[ERROR] %s" % message
+        else
+          "\n[ERROR] %s:%s:%s" % [line, line_offset, message]
+        end
+      end
+
+      def runtimeError(*args)
+        raise RuntimeError, 'Compression failed. %s' % error(*args)
       end
     end
 
