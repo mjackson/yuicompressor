@@ -3,6 +3,8 @@ require 'open3'
 module YUICompressor
   module Shell
 
+    # Returns an array of flags that should be passed to the jar file on the
+    # command line for the given set of +options+.
     def command_arguments(options={})
       args = []
       args.concat(['--type', options[:type].to_s]) if options[:type]
@@ -18,6 +20,14 @@ module YUICompressor
       args
     end
 
+    # Compresses the given +stream_or_string+ of code using the given +options+.
+    # When using this method directly, at least the +:type+ option must be
+    # specified, and should be one of +'css'+ or +'js'+. See
+    # YUICompressor#compress_css and YUICompressor#compress_js for more details
+    # about which options are acceptable for each type of compressor.
+    #
+    # If a block is given, it will receive the IO output object. Otherwise the
+    # output will be returned as a string.
     def compress(stream_or_string, options={})
       raise ArgumentError, 'Option :type required' unless options.key?(:type)
 

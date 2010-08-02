@@ -1,39 +1,61 @@
 require 'stringio'
 
 module YUICompressor
+
+  # The path to the YUI Compressor jar file.
   JAR_FILE = File.expand_path('../yuicompressor-2.4.2.jar', __FILE__)
 
   autoload :JRuby, 'yuicompressor/jruby'
   autoload :Shell, 'yuicompressor/shell'
 
+module_function
+
+  # Returns +true+ if the Ruby platform is JRuby.
   def jruby?
     !! (RUBY_PLATFORM =~ /java/)
   end
-  module_function :jruby?
 
-  def compress_css(stream_or_string, options={})
-    compress(stream_or_string, options.merge(:type => 'css'))
+  # Compress the given CSS +stream_or_string+ using the given +options+.
+  # Options should be a Hash with any of the following keys:
+  #
+  # +:charset+::      The character encoding of the original code. Defaults
+  #                   to +'utf-8'+.
+  # +:line_break+::   The maximum number of characters that may appear in a
+  #                   single line of compressed code. Defaults to no maximum
+  #                   length.
+  def compress_css(stream_or_string, options={}, &block)
+    compress(stream_or_string, options.merge(:type => 'css'), &block)
   end
-  module_function :compress_css
 
+  # Compress the given JavaScript +stream_or_string+ using the given +options+.
+  # Options should be a Hash with any of the following keys:
+  #
+  # +:charset+::      The character encoding of the original code. Defaults
+  #                   to +'utf-8'+.
+  # +:line_break+::   The maximum number of characters that may appear in a
+  #                   single line of compressed code. Defaults to no maximum
+  #                   length.
+  # +:munge+::        Should be +true+ if the compressor should shorten local
+  #                   variable names when possible. Defaults to +false+.
+  # +:preserve_semicolons+::  Should be +true+ if the compressor should preserve
+  #                           all semicolons in the code. Defaults to +false+.
+  # +:optimize+::     Should be +true+ if the compressor should enable all
+  #                   micro optimizations. Defaults to +true+.
   def compress_js(stream_or_string, options={})
-    compress(stream_or_string, options.merge(:type => 'js'))
+    compress(stream_or_string, options.merge(:type => 'js'), &block)
   end
-  module_function :compress_js
 
-  def default_css_options
+  def default_css_options #:nodoc:
     { :charset => 'utf-8', :line_break => nil }
   end
-  module_function :default_css_options
 
-  def default_js_options
+  def default_js_options #:nodoc:
     default_css_options.merge(
       :munge => false,
       :preserve_semicolons => false,
       :optimize => true
     )
   end
-  module_function :default_js_options
 
   def streamify(stream_or_string) #:nodoc:
     if IO === stream_or_string || StringIO === stream_or_string
@@ -44,17 +66,16 @@ module YUICompressor
       raise ArgumentError, 'Stream or string required'
     end
   end
-  module_function :streamify
 
-  if jruby?
-    # If we're on JRuby we can make native calls into the YUI Compressor code.
-    # This gives us a big speed boost.
-    include JRuby
-  else
-    # Otherwise, we need to make a system call to the Java interpreter.
-    include Shell
+  # If we're on JRuby we can use the YUI Compressor Java classes directly. This
+  # gives a huge speed boost. Otherwise we need to make a system call to the
+  # Java interpreter and stream IO to/from the shell.
+  mod = jruby? ? JRuby : Shell
+
+  include mod
+
+  mod.instance_methods.each do |name|
+    module_function name
   end
 
-  module_function :command_arguments
-  module_function :compress
 end

@@ -1,8 +1,9 @@
-require 'logger'
 require 'java'
+require 'logger'
 
 module YUICompressor
   module JRuby
+
     require JAR_FILE
 
     import java.io.InputStreamReader
@@ -10,7 +11,7 @@ module YUICompressor
     import com.yahoo.platform.yui.compressor.JavaScriptCompressor
     import com.yahoo.platform.yui.compressor.CssCompressor
 
-    class ErrorReporter < Logger
+    class ErrorReporter < Logger #:nodoc:
       def initialize
         super($stderr)
       end
@@ -24,6 +25,8 @@ module YUICompressor
       end
     end
 
+    # Returns the set of arguments that are needed to instantiate a compressor
+    # using the given +options+.
     def command_arguments(options={})
       args = [ options[:line_break] ? options[:line_break].to_i : -1 ]
 
@@ -37,6 +40,14 @@ module YUICompressor
       args
     end
 
+    # Compresses the given +stream_or_string+ of code using the given +options+.
+    # When using this method directly, at least the +:type+ option must be
+    # specified, and should be one of +'css'+ or +'js'+. See
+    # YUICompressor#compress_css and YUICompressor#compress_js for more details
+    # about which options are acceptable for each type of compressor.
+    #
+    # If a block is given, it will receive the IO output object. Otherwise the
+    # output will be returned as a string.
     def compress(stream_or_string, options={})
       raise ArgumentError, 'Option :type required' unless options.key?(:type)
 
