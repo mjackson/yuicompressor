@@ -1,6 +1,9 @@
 require 'java'
 
 module YUICompressor
+  # This module contains methods specific to the JRuby platform and is
+  # automatically used when JRuby is detected. It provides a significant
+  # increase in performance over the Shell module.
   module JRuby
 
     require JAR_FILE
@@ -41,9 +44,9 @@ module YUICompressor
 
     # Compresses the given +stream_or_string+ of code using the given +options+.
     # When using this method directly, at least the +:type+ option must be
-    # specified, and should be one of +'css'+ or +'js'+. See
-    # YUICompressor#compress_css and YUICompressor#compress_js for more details
-    # about which options are acceptable for each type of compressor.
+    # specified, and should be one of <tt>"css"</tt> or <tt>"js"</tt>. See
+    # YUICompressor#compress_css and YUICompressor#compress_js for details about
+    # which options are acceptable for each type of compressor.
     #
     # If a block is given, it will receive the IO output object. Otherwise the
     # output will be returned as a string.

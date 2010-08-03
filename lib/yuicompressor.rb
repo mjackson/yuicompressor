@@ -19,7 +19,7 @@ module_function
   # Options should be a Hash with any of the following keys:
   #
   # +:charset+::      The character encoding of the original code. Defaults
-  #                   to +'utf-8'+.
+  #                   to <tt>"utf-8"</tt>.
   # +:line_break+::   The maximum number of characters that may appear in a
   #                   single line of compressed code. Defaults to no maximum
   #                   length.
@@ -31,7 +31,7 @@ module_function
   # Options should be a Hash with any of the following keys:
   #
   # +:charset+::      The character encoding of the original code. Defaults
-  #                   to +'utf-8'+.
+  #                   to <tt>"utf-8"</tt>.
   # +:line_break+::   The maximum number of characters that may appear in a
   #                   single line of compressed code. Defaults to no maximum
   #                   length.

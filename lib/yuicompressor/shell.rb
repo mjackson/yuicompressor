@@ -1,6 +1,9 @@
 require 'open3'
 
 module YUICompressor
+  # This module contains methods that allow the YUI Compressor to be used by
+  # piping IO to a separate Java process via the system shell. It is used on all
+  # platforms except for JRuby.
   module Shell
 
     # Returns an array of flags that should be passed to the jar file on the
@@ -22,9 +25,14 @@ module YUICompressor
 
     # Compresses the given +stream_or_string+ of code using the given +options+.
     # When using this method directly, at least the +:type+ option must be
-    # specified, and should be one of +'css'+ or +'js'+. See
-    # YUICompressor#compress_css and YUICompressor#compress_js for more details
-    # about which options are acceptable for each type of compressor.
+    # specified, and should be one of <tt>"css"</tt> or <tt>"js"</tt>. See
+    # YUICompressor#compress_css and YUICompressor#compress_js for details about
+    # which options are acceptable for each type of compressor.
+    #
+    # In addition to the standard options, this method also accepts a
+    # <tt>:java</tt> option that can be used to specify the location of the Java
+    # binary. This option will default to using <tt>"java"</tt> unless otherwise
+    # specified.
     #
     # If a block is given, it will receive the IO output object. Otherwise the
     # output will be returned as a string.
@@ -45,21 +53,21 @@ module YUICompressor
       command = [ options.delete(:java) || 'java', '-jar', JAR_FILE ]
       command.concat(command_arguments(options))
 
-      Open3.popen3(*command) do |stdin, stdout, stderr|
+      Open3.popen3(*command) do |input, output, stderr|
         begin
           while buffer = stream.read(4096)
-            stdin.write(buffer)
+            input.write(buffer)
           end
 
-          stdin.close
+          input.close
 
           err = stderr.read
           raise err unless err.empty?
 
           if block_given?
-            yield stdout
+            yield output
           else
-            stdout.read
+            output.read
           end
         rescue Exception => e
           raise RuntimeError, 'Compression failed. %s' % e
