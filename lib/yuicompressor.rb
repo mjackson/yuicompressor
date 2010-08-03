@@ -8,7 +8,7 @@ module YUICompressor
   autoload :JRuby, 'yuicompressor/jruby'
   autoload :Shell, 'yuicompressor/shell'
 
-module_function
+  module_function
 
   # Returns +true+ if the Ruby platform is JRuby.
   def jruby?
