@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'yuicompressor'
-  s.version = '1.0'
+  s.version = '1.0.1'
   s.date = '2010-08-02'
 
   s.summary = 'A YUI JavaScript and CSS compressor for Ruby and JRuby'
