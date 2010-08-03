@@ -1,4 +1,5 @@
 require 'java'
+require 'stringio'
 
 module YUICompressor
   # This module contains methods specific to the JRuby platform and is
