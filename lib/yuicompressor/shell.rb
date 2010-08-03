@@ -15,7 +15,6 @@ module YUICompressor
     def command_arguments(options={})
       args = []
       args.concat(['--type', options[:type].to_s]) if options[:type]
-      args.concat(['--charset', options[:charset].to_s]) if options[:charset]
       args.concat(['--line-break', options[:line_break].to_s]) if options[:line_break]
 
       if options[:type].to_s == 'js'

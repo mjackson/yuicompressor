@@ -18,8 +18,6 @@ module YUICompressor
   # Compress the given CSS +stream_or_string+ using the given +options+.
   # Options should be a Hash with any of the following keys:
   #
-  # +:charset+::      The character encoding of the original code. Defaults
-  #                   to <tt>"utf-8"</tt>.
   # +:line_break+::   The maximum number of characters that may appear in a
   #                   single line of compressed code. Defaults to no maximum
   #                   length.
@@ -30,8 +28,6 @@ module YUICompressor
   # Compress the given JavaScript +stream_or_string+ using the given +options+.
   # Options should be a Hash with any of the following keys:
   #
-  # +:charset+::      The character encoding of the original code. Defaults
-  #                   to <tt>"utf-8"</tt>.
   # +:line_break+::   The maximum number of characters that may appear in a
   #                   single line of compressed code. Defaults to no maximum
   #                   length.
@@ -46,7 +42,7 @@ module YUICompressor
   end
 
   def default_css_options #:nodoc:
-    { :charset => 'utf-8', :line_break => nil }
+    { :line_break => nil }
   end
 
   def default_js_options #:nodoc:
