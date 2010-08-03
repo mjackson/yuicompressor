@@ -18,12 +18,12 @@ Foo["bar"] = (function(baz) {
 CODE
 
   def test_default_command_arguments
+    args = command_arguments(default_js_options)
+
     if jruby?
-      args = command_arguments(default_js_options)
       assert_equal([-1], args)
     else
-      args = command_arguments(default_js_options)
-      assert_equal(%w< --charset utf-8 >, args)
+      assert_equal([], args)
     end
   end
 

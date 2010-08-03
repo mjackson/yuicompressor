@@ -16,7 +16,7 @@ CODE
     if jruby?
       assert_equal([-1], args)
     else
-      assert_equal(%w< --charset utf-8 >, args)
+      assert_equal([], args)
     end
   end
 
