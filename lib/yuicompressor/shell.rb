@@ -1,9 +1,13 @@
-require 'open3'
+begin
+  require 'open3'
+rescue LoadError
+  require 'win32/open3'
+end
 
 module YUICompressor
   # This module contains methods that allow the YUI Compressor to be used by
   # piping IO to a separate Java process via the system shell. It is used on all
-  # platforms except for JRuby.
+  # Ruby platforms except for JRuby.
   module Shell
 
     # Returns an array of flags that should be passed to the jar file on the
@@ -53,7 +57,7 @@ module YUICompressor
       command = [ options.delete(:java) || 'java', '-jar', JAR_FILE ]
       command.concat(command_arguments(options))
 
-      Open3.popen3(*command) do |input, output, stderr|
+      Open3.popen3(command.join(' ')) do |input, output, stderr|
         begin
           while buffer = stream.read(4096)
             input.write(buffer)
