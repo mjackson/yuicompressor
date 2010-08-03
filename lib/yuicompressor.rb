@@ -20,7 +20,8 @@ module YUICompressor
   #
   # +:line_break+::   The maximum number of characters that may appear in a
   #                   single line of compressed code. Defaults to no maximum
-  #                   length.
+  #                   length. If set to 0 each line will be the minimum length
+  #                   possible.
   def compress_css(stream_or_string, options={}, &block)
     compress(stream_or_string, options.merge(:type => 'css'), &block)
   end
@@ -30,7 +31,8 @@ module YUICompressor
   #
   # +:line_break+::   The maximum number of characters that may appear in a
   #                   single line of compressed code. Defaults to no maximum
-  #                   length.
+  #                   length. If set to 0 each line will be the minimum length
+  #                   possible.
   # +:munge+::        Should be +true+ if the compressor should shorten local
   #                   variable names when possible. Defaults to +false+.
   # +:preserve_semicolons+::  Should be +true+ if the compressor should preserve
