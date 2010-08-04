@@ -22,7 +22,7 @@ module YUICompressor
     end
 
     def runtimeError(*args)
-      raise RuntimeError, 'Compression failed. %s' % error(*args)
+      raise 'Compression failed: %s' % error(*args)
     end
   end
 
@@ -73,12 +73,8 @@ module YUICompressor
 
     compressor.compress(writer, *command_arguments(options))
     writer.flush
-    output.rewind
 
-    if block_given?
-      yield output
-    else
-      output.read
-    end
+    output.rewind
+    output.read
   end
 end

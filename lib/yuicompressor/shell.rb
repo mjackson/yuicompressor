@@ -1,8 +1,4 @@
-begin
-  require 'open3'
-rescue LoadError
-  require 'win32/open3'
-end
+require 'open3'
 
 module YUICompressor
   # This file contains methods that allow the YUI Compressor to be used by
@@ -62,19 +58,11 @@ module YUICompressor
         while buffer = stream.read(4096)
           input.write(buffer)
         end
+        input.close_write
 
-        input.close
-
-        err = stderr.read
-        raise err unless err.empty?
-
-        if block_given?
-          yield output
-        else
-          output.read
-        end
+        output.read
       rescue Exception => e
-        raise RuntimeError, 'Compression failed. %s' % e
+        raise 'Compression failed: %s' % e
       end
     end
   end

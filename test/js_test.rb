@@ -77,16 +77,13 @@ var Foo={a:1};Foo.bar=(function(baz){if(false){doSomething();}else{for(var index
 CODE
   end
 
-  def test_errors
-    assert_raise RuntimeError do
-      # Should trigger a compilation error.
-      compress_js('var a = function(){;')
-    end
-  end
-
   def test_stream
     assert_equal (<<'CODE').chomp, compress_js(File.new(FILE, 'r'))
 var Foo={a:1};Foo.bar=(function(baz){if(false){doSomething()}else{for(var index=0;index<baz.length;index++){doSomething(baz[index])}}})("hello");
 CODE
+  end
+
+  def test_large_stream
+    assert compress_js(File.new(File.expand_path('../_files/jquery-1.4.2.js', __FILE__), 'r'))
   end
 end
