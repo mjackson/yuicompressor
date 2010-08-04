@@ -38,20 +38,20 @@ class CSSTest < Test::Unit::TestCase
 
   def test_default_options
     assert_equal (<<'CODE').chomp, compress_css(CODE)
-.a-class{background-color:red;background-position:0 0;}div#an-id{color:#FFF;}
+.a-class{background-color:red;background-position:0 0}div#an-id{color:#fff}
 CODE
   end
 
   def test_line_break_option
     assert_equal (<<'CODE').chomp, compress_css(CODE, :line_break => 0)
-.a-class{background-color:red;background-position:0 0;}
-div#an-id{color:#FFF;}
+.a-class{background-color:red;background-position:0 0}
+div#an-id{color:#fff}
 CODE
   end
 
   def test_stream
     assert_equal (<<'CODE').chomp, compress_css(File.new(FILE, 'r'))
-.a-class{background-color:red;background-position:0 0;}div#an-id{color:#FFF;}
+.a-class{background-color:red;background-position:0 0}div#an-id{color:#fff}
 CODE
   end
 end
