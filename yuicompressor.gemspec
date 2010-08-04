@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'yuicompressor'
-  s.version = '1.1.0'
+  s.version = '1.1.1'
   s.date = '2010-08-04'
 
   s.summary = 'A YUI JavaScript and CSS compressor for Ruby and JRuby'
@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
 
   s.require_paths = %w< lib >
 
-  s.files = Dir['lib/**/*.rb'] +
-    Dir['test/*.rb'] +
+  s.files = Dir['lib/**/*'] +
+    Dir['test/**/*'] +
     %w< yuicompressor.gemspec Rakefile README >
 
   s.test_files = s.files.select {|path| path =~ /^test\/.*_test.rb/ }
