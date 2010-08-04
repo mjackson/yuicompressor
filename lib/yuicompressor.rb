@@ -4,9 +4,6 @@ module YUICompressor
   # The path to the YUI Compressor jar file.
   JAR_FILE = File.expand_path('../yuicompressor-2.4.2.jar', __FILE__)
 
-  autoload :JRuby, 'yuicompressor/jruby'
-  autoload :Shell, 'yuicompressor/shell'
-
   module_function
 
   # Returns +true+ if the Ruby platform is JRuby.
@@ -67,11 +64,9 @@ module YUICompressor
   # If we're on JRuby we can use the YUI Compressor Java classes directly. This
   # gives a huge speed boost. Otherwise we need to make a system call to the
   # Java interpreter and stream IO to/from the shell.
-  mod = jruby? ? JRuby : Shell
-
-  include mod
-
-  mod.instance_methods.each do |name|
-    module_function name
+  if jruby?
+    require 'yuicompressor/jruby'
+  else
+    require 'yuicompressor/shell'
   end
 end
