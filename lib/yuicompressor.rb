@@ -1,7 +1,6 @@
 require 'stringio'
 
 module YUICompressor
-
   # The path to the YUI Compressor jar file.
   JAR_FILE = File.expand_path('../yuicompressor-2.4.2.jar', __FILE__)
 
@@ -75,5 +74,4 @@ module YUICompressor
   mod.instance_methods.each do |name|
     module_function name
   end
-
 end

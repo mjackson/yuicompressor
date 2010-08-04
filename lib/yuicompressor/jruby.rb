@@ -2,13 +2,12 @@ require 'java'
 require 'stringio'
 
 module YUICompressor
+  require JAR_FILE
+
   # This module contains methods specific to the JRuby platform and is
   # automatically used when JRuby is detected. It provides a significant
   # increase in performance over the Shell module.
   module JRuby
-
-    require JAR_FILE
-
     import java.io.InputStreamReader
     import java.io.OutputStreamWriter
     import com.yahoo.platform.yui.compressor.JavaScriptCompressor
