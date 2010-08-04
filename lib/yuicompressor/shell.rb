@@ -23,19 +23,17 @@ module YUICompressor
     args
   end
 
-  # Compresses the given +stream_or_string+ of code using the given +options+.
-  # When using this method directly, at least the +:type+ option must be
-  # specified, and should be one of <tt>"css"</tt> or <tt>"js"</tt>. See
-  # YUICompressor#compress_css and YUICompressor#compress_js for details about
-  # which options are acceptable for each type of compressor.
+  # Returns a compressed version of the given +stream_or_string+ of code using
+  # the given +options+. When using this method directly, at least the
+  # <tt>:type</tt> option must be specified, and should be one of <tt>"css"</tt>
+  # or <tt>"js"</tt>. See YUICompressor#compress_css and
+  # YUICompressor#compress_js for details about which options are acceptable for
+  # each type of compressor.
   #
   # In addition to the standard options, this method also accepts a
   # <tt>:java</tt> option that can be used to specify the location of the Java
-  # binary. This option will default to using <tt>"java"</tt> unless otherwise
-  # specified.
-  #
-  # If a block is given, it will receive the IO output object. Otherwise the
-  # output will be returned as a string.
+  # executable. This option will default to using <tt>"java"</tt> unless
+  # otherwise specified.
   def compress(stream_or_string, options={})
     raise ArgumentError, 'Option :type required' unless options.key?(:type)
 
