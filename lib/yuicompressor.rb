@@ -2,7 +2,7 @@ require 'stringio'
 
 module YUICompressor
   # The path to the YUI Compressor jar file.
-  JAR_FILE = File.expand_path('../yuicompressor-2.4.2.jar', __FILE__)
+  JAR_FILE = File.expand_path('../yuicompressor-2.4.4.jar', __FILE__)
 
   module_function
 
