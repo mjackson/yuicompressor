@@ -1,21 +1,8 @@
 require File.expand_path('../helper', __FILE__)
 
 class JSTest < Test::Unit::TestCase
-  FIXTURE = <<'CODE'
-// here's a comment
-var Foo = { "a": 1 };
-Foo["bar"] = (function(baz) {
-  /* here's a
-     multiline comment */
-  if (false) {
-    doSomething();
-  } else {
-    for (var index = 0; index < baz.length; index++) {
-      doSomething(baz[index]);
-    }
-  }
-})("hello");
-CODE
+  FILE = File.expand_path('../_files/test.js', __FILE__)
+  CODE = File.read(FILE)
 
   def test_default_command_arguments
     args = command_arguments(default_js_options)
@@ -56,13 +43,13 @@ CODE
   end
 
   def test_default_options
-    assert_equal (<<'CODE').chomp, compress_js(FIXTURE)
+    assert_equal (<<'CODE').chomp, compress_js(CODE)
 var Foo={a:1};Foo.bar=(function(baz){if(false){doSomething()}else{for(var index=0;index<baz.length;index++){doSomething(baz[index])}}})("hello");
 CODE
   end
 
   def test_line_break_option
-    assert_equal (<<'CODE').chomp, compress_js(FIXTURE, :line_break => 0)
+    assert_equal (<<'CODE').chomp, compress_js(CODE, :line_break => 0)
 var Foo={a:1};
 Foo.bar=(function(baz){if(false){doSomething()
 }else{for(var index=0;
@@ -73,19 +60,19 @@ CODE
   end
 
   def test_munge_option
-    assert_equal (<<'CODE').chomp, compress_js(FIXTURE, :munge => true)
+    assert_equal (<<'CODE').chomp, compress_js(CODE, :munge => true)
 var Foo={a:1};Foo.bar=(function(b){if(false){doSomething()}else{for(var a=0;a<b.length;a++){doSomething(b[a])}}})("hello");
 CODE
   end
 
   def test_optimize_option
-    assert_equal (<<'CODE').chomp, compress_js(FIXTURE, :optimize => false)
+    assert_equal (<<'CODE').chomp, compress_js(CODE, :optimize => false)
 var Foo={"a":1};Foo["bar"]=(function(baz){if(false){doSomething()}else{for(var index=0;index<baz.length;index++){doSomething(baz[index])}}})("hello");
 CODE
   end
 
   def test_preserve_semicolons_option
-    assert_equal (<<'CODE').chomp, compress_js(FIXTURE, :preserve_semicolons => true)
+    assert_equal (<<'CODE').chomp, compress_js(CODE, :preserve_semicolons => true)
 var Foo={a:1};Foo.bar=(function(baz){if(false){doSomething();}else{for(var index=0;index<baz.length;index++){doSomething(baz[index]);}}})("hello");
 CODE
   end
@@ -95,5 +82,11 @@ CODE
       # Should trigger a compilation error.
       compress_js('var a = function(){;')
     end
+  end
+
+  def test_stream
+    assert_equal (<<'CODE').chomp, compress_js(File.new(FILE, 'r'))
+var Foo={a:1};Foo.bar=(function(baz){if(false){doSomething()}else{for(var index=0;index<baz.length;index++){doSomething(baz[index])}}})("hello");
+CODE
   end
 end
