@@ -94,7 +94,7 @@ CSS compression:
     }
     CODE
     YUICompressor.compress_css(css)
-     => "div.main{background-position:0 0;}h1#title{color:#FFF;}"
+     => "div.main{background-position:0 0}h1#title{color:#fff}"
 
 CSS compression with every statement on a separate line:
 
@@ -108,7 +108,7 @@ CSS compression with every statement on a separate line:
     }
     CODE
     YUICompressor.compress_css(css, :line_break => 0)
-     => "div.main{background-position:0 0;}\nh1#title{color:#FFF;}"
+     => "div.main{background-position:0 0}\nh1#title{color:#fff}"
 
 Including in another module:
 
