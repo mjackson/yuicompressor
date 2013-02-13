@@ -7,10 +7,10 @@ module YUICompressor
 
   require JAR_FILE
 
-  import java.io.InputStreamReader
-  import java.io.OutputStreamWriter
-  import com.yahoo.platform.yui.compressor.JavaScriptCompressor
-  import com.yahoo.platform.yui.compressor.CssCompressor
+  java_import java.io.InputStreamReader
+  java_import java.io.OutputStreamWriter
+  java_import com.yahoo.platform.yui.compressor.JavaScriptCompressor
+  java_import com.yahoo.platform.yui.compressor.CssCompressor
 
   class ErrorReporter #:nodoc:
     def error(message, source_name, line, line_source, line_offset)
