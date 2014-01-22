@@ -1,13 +1,13 @@
 Gem::Specification.new do |s|
   s.name = 'yuicompressor'
-  s.version = '1.2.1'
-  s.date = '2010-08-04'
+  s.version = '1.2.2'
+  s.date = '2014-01-21'
 
   s.summary = 'A YUI JavaScript and CSS compressor for Ruby and JRuby'
   s.description = 'A YUI JavaScript and CSS compressor for Ruby and JRuby'
 
-  s.author = 'Michael Jackson'
-  s.email = 'mjijackson@gmail.com'
+  s.authors = ['Michael Jackson', 'Wolfram Arnold']
+  s.emails = ['mjijackson@gmail.com', 'warnold@twitter.com']
 
   s.require_paths = %w< lib >
 
