@@ -10,7 +10,7 @@ class CSSTest < Test::Unit::TestCase
     if jruby?
       assert_equal([-1], args)
     else
-      assert_equal([], args)
+      assert_equal(['--charset', 'utf8'], args)
     end
   end
 

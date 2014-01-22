@@ -51,6 +51,8 @@ When compressing CSS, the following option is available:
                     single line of compressed code. Defaults to no maximum
                     length. If set to 0 each line will be the minimum length
                     possible.
+    :charset        Sests the carset in which to read the input file. Passed
+                    through to the YUICompressor Java library. Default: utf8
 
 When compressing JavaScript, these additional options are available:
 
