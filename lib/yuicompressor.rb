@@ -18,6 +18,7 @@ module YUICompressor
   #                   single line of compressed code. Defaults to no maximum
   #                   length. If set to 0 each line will be the minimum length
   #                   possible.
+  # +:charset+::      Charset. Default is utf8.
   def compress_css(stream_or_string, options={}, &block)
     compress(stream_or_string, options.merge(:type => 'css'), &block)
   end
@@ -35,19 +36,21 @@ module YUICompressor
   #                           all semicolons in the code. Defaults to +false+.
   # +:optimize+::     Should be +true+ if the compressor should enable all
   #                   micro optimizations. Defaults to +true+.
+  # +:charset+::      Charset. Default is utf8.
   def compress_js(stream_or_string, options={}, &block)
     compress(stream_or_string, options.merge(:type => 'js'), &block)
   end
 
   def default_css_options #:nodoc:
-    { :line_break => nil }
+    { :line_break => nil, :charset => 'utf8' }
   end
 
   def default_js_options #:nodoc:
     default_css_options.merge(
       :munge => false,
       :preserve_semicolons => false,
-      :optimize => true
+      :optimize => true,
+      :charset => 'utf8'
     )
   end
 
