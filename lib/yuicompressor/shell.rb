@@ -54,9 +54,7 @@ module YUICompressor
 
     Open3.popen3(command.join(' ')) do |input, output, stderr|
       begin
-        while buffer = stream.read(4096)
-          input.write(buffer)
-        end
+        input.write(stream.read)
         input.close_write
 
         output.read
