@@ -38,7 +38,7 @@ module YUICompressor
   def compress(stream_or_string, options={})
     raise ArgumentError, 'Option :type required' unless options.key?(:type)
 
-    stream = streamify(stream_or_string)
+    string = stringify(stream_or_string)
 
     case options[:type].to_s
     when 'js'
@@ -52,15 +52,10 @@ module YUICompressor
     command = [ options.delete(:java) || 'java', '-jar', JAR_FILE ]
     command.concat(command_arguments(options))
 
-    Open3.popen3(command.join(' ')) do |input, output, stderr|
-      begin
-        input.write(stream.read)
-        input.close_write
-
-        output.read
-      rescue Exception => e
-        raise 'Compression failed: %s' % e
-      end
+    stdout_str, stderr_str, status = Open3.capture3(command.join(' '), stdin_data: string, binmode: true)
+    unless status.success?
+     raise "Compression failed: #{stderr_str}"
     end
+    stdout_str
   end
 end

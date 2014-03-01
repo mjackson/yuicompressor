@@ -86,4 +86,10 @@ CODE
   def test_large_stream
     assert compress_js(File.new(File.expand_path('../_files/jquery-1.4.2.js', __FILE__), 'r'))
   end
+
+  def test_error_reporting
+    assert_raises RuntimeError do
+      compress_js('function() {;')  # syntax error
+    end
+  end
 end
