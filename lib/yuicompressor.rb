@@ -64,6 +64,14 @@ module YUICompressor
     end
   end
 
+  def stringify(stream_or_string) #:nodoc:
+    case stream_or_string
+      when IO then stream_or_string.read
+      when String then stream_or_string
+      else raise ArgumentError, 'Stream or string required'
+    end
+  end
+
   # If we're on JRuby we can use the YUI Compressor Java classes directly. This
   # gives a huge speed boost. Otherwise we need to make a system call to the
   # Java interpreter and stream IO to/from the shell.
